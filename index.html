@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liquid Glass UI - Apple-Inspired Component Library</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- TRUE Liquid Glass Filter - Based on Lyra Rebane's technique -->
+    <svg style="display: none">
+        <defs>
+            <filter id="liquid-glass-filter">
+                <!-- Darkness layer (shadows) -->
+                <feImage href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='%230001' /%3E%3Crect width='100%25' height='100%25' fill='%23FFF' style='filter:blur(5px)' /%3E%3C/svg%3E" 
+                         result="darkness" />
+                
+                <!-- Lightness layer (highlights) -->
+                <feImage href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='%23FFF1' style='filter:blur(15px)' /%3E%3C/svg%3E" 
+                         result="lightness" />
+                
+                <!-- Mask -->
+                <feImage href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='%23000' /%3E%3C/svg%3E" 
+                         result="mask" />
+                
+                <!-- Chromatic aberration gradients -->
+                <feImage href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='g1' x1='0%25' y1='0%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%23000'/%3E%3Cstop offset='100%25' stop-color='%2300F'/%3E%3C/linearGradient%3E%3ClinearGradient id='g2' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23000'/%3E%3Cstop offset='100%25' stop-color='%230F0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='%237F7F7F' /%3E%3Crect width='100%25' height='100%25' fill='%23000' /%3E%3Crect width='100%25' height='100%25' fill='url(%23g1)' style='mix-blend-mode: screen' /%3E%3Crect width='100%25' height='100%25' fill='url(%23g2)' style='mix-blend-mode: screen' /%3E%3Crect width='100%25' height='100%25' fill='%237F7F7FBB' style='filter:blur(5px)' /%3E%3C/svg%3E" 
+                         result="chromaticMap" />
+                
+                <!-- Pre-blur -->
+                <feGaussianBlur stdDeviation="0.7" in="SourceGraphic" result="preblur" />
+                
+                <!-- Red Channel Displacement -->
+                <feDisplacementMap in="preblur" in2="chromaticMap" scale="-148" 
+                                   xChannelSelector="B" yChannelSelector="G" result="dispR" />
+                <feColorMatrix in="dispR" type="matrix"
+                               values="1 0 0 0 0
+                                       0 0 0 0 0
+                                       0 0 0 0 0
+                                       0 0 0 1 0" result="redChannel" />
+                
+                <!-- Green Channel Displacement -->
+                <feDisplacementMap in="preblur" in2="chromaticMap" scale="-150" 
+                                   xChannelSelector="B" yChannelSelector="G" result="dispG" />
+                <feColorMatrix in="dispG" type="matrix"
+                               values="0 0 0 0 0
+                                       0 1 0 0 0
+                                       0 0 0 0 0
+                                       0 0 0 1 0" result="greenChannel" />
+                
+                <!-- Blue Channel Displacement -->
+                <feDisplacementMap in="preblur" in2="chromaticMap" scale="-152" 
+                                   xChannelSelector="B" yChannelSelector="G" result="dispB" />
+                <feColorMatrix in="dispB" type="matrix"
+                               values="0 0 0 0 0
+                                       0 0 0 0 0
+                                       0 0 1 0 0
+                                       0 0 0 1 0" result="blueChannel" />
+                
+                <!-- Combine RGB channels -->
+                <feBlend in="greenChannel" in2="blueChannel" mode="screen" result="gb" />
+                <feBlend in="gb" in2="redChannel" mode="screen" result="rgb" />
+                
+                <!-- Post-blur -->
+                <feGaussianBlur stdDeviation="0.0" in="rgb" result="postblur" />
+                
+                <!-- Add lightness -->
+                <feBlend in="postblur" in2="lightness" mode="screen" result="withLight" />
+                
+                <!-- Add darkness -->
+                <feBlend in="withLight" in2="darkness" mode="multiply" result="withDark" />
+                
+                <!-- Apply mask -->
+                <feComposite in="withDark" in2="mask" operator="in" result="final" />
+            </filter>
+        </defs>
+    </svg>
+    <!-- Hero Section -->
+    <header class="lg-hero">
+        <div class="lg-container">
+            <h1 class="lg-title">Liquid Glass UI</h1>
+            <p class="lg-subtitle">A beautiful, accessible component library inspired by Apple's design language</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="lg-container">
+        <!-- Component Showcase -->
+        <section class="lg-section">
+            <h2 class="lg-section-title">Components</h2>
+            
+            <!-- Buttons -->
+            <div class="lg-component-group">
+                <h3 class="lg-component-title">Buttons</h3>
+                <div class="lg-button-group">
+                    <button class="lg-button lg-button-primary">Primary Button</button>
+                    <button class="lg-button lg-button-secondary">Secondary Button</button>
+                    <button class="lg-button lg-button-ghost">Ghost Button</button>
+                    <button class="lg-button lg-button-danger">Danger Button</button>
+                </div>
+            </div>
+
+            <!-- Cards -->
+            <div class="lg-component-group">
+                <h3 class="lg-component-title">Cards</h3>
+                <div class="lg-grid">
+                    <div class="lg-card">
+                        <div class="lg-card-header">
+                            <h4 class="lg-card-title">Feature Card</h4>
+                        </div>
+                        <div class="lg-card-content">
+                            <p>Beautiful frosted glass effect with subtle backdrop blur and semi-transparent backgrounds.</p>
+                        </div>
+                        <div class="lg-card-footer">
+                            <button class="lg-button lg-button-sm lg-button-primary">Learn More</button>
+                        </div>
+                    </div>
+
+                    <div class="lg-card">
+                        <div class="lg-card-header">
+                            <h4 class="lg-card-title">Interactive Card</h4>
+                        </div>
+                        <div class="lg-card-content">
+                            <p>Hover and focus states that feel natural and responsive, just like Apple's interfaces.</p>
+                        </div>
+                        <div class="lg-card-footer">
+                            <button class="lg-button lg-button-sm lg-button-secondary">Explore</button>
+                        </div>
+                    </div>
+
+                    <div class="lg-card">
+                        <div class="lg-card-header">
+                            <h4 class="lg-card-title">Accessible Design</h4>
+                        </div>
+                        <div class="lg-card-content">
+                            <p>WCAG compliant components with proper keyboard navigation and screen reader support.</p>
+                        </div>
+                        <div class="lg-card-footer">
+                            <button class="lg-button lg-button-sm lg-button-ghost">Discover</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Fields -->
+            <div class="lg-component-group">
+                <h3 class="lg-component-title">Form Elements</h3>
+                <div class="lg-form-grid">
+                    <div class="lg-form-group">
+                        <label for="email" class="lg-label">Email</label>
+                        <input type="email" id="email" class="lg-input" placeholder="you@example.com">
+                    </div>
+
+                    <div class="lg-form-group">
+                        <label for="password" class="lg-label">Password</label>
+                        <input type="password" id="password" class="lg-input" placeholder="••••••••">
+                    </div>
+
+                    <div class="lg-form-group">
+                        <label for="message" class="lg-label">Message</label>
+                        <textarea id="message" class="lg-textarea" placeholder="Your message here..." rows="4"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alert/Notification -->
+            <div class="lg-component-group">
+                <h3 class="lg-component-title">Alerts</h3>
+                <div class="lg-alert lg-alert-info">
+                    <svg class="lg-alert-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div class="lg-alert-content">
+                        <h4 class="lg-alert-title">Information</h4>
+                        <p class="lg-alert-description">This is an informational alert with the liquid glass effect.</p>
+                    </div>
+                </div>
+
+                <div class="lg-alert lg-alert-success">
+                    <svg class="lg-alert-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div class="lg-alert-content">
+                        <h4 class="lg-alert-title">Success</h4>
+                        <p class="lg-alert-description">Your changes have been saved successfully.</p>
+                    </div>
+                </div>
+
+                <div class="lg-alert lg-alert-warning">
+                    <svg class="lg-alert-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    <div class="lg-alert-content">
+                        <h4 class="lg-alert-title">Warning</h4>
+                        <p class="lg-alert-description">Please review your changes before proceeding.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Trigger -->
+            <div class="lg-component-group">
+                <h3 class="lg-component-title">Modal & Toast</h3>
+                <div class="lg-button-group">
+                    <button class="lg-button lg-button-primary" onclick="LiquidGlass.modal.open('demo-modal')">
+                        Open Modal
+                    </button>
+                    <button class="lg-button lg-button-secondary" onclick="LiquidGlass.toast.show({message: 'This is a beautiful toast notification!', type: 'success', duration: 4000})">
+                        Show Toast
+                    </button>
+                    <button class="lg-button lg-button-ghost" onclick="LiquidGlass.toast.show({message: 'Check out this info message!', type: 'info', duration: 4000})">
+                        Info Toast
+                    </button>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="lg-component-group">
+                <h3 class="lg-component-title">Navigation</h3>
+                <nav class="lg-nav">
+                    <a href="#" class="lg-nav-item lg-nav-item-active">Home</a>
+                    <a href="#" class="lg-nav-item">Components</a>
+                    <a href="#" class="lg-nav-item">Documentation</a>
+                    <a href="#" class="lg-nav-item">Examples</a>
+                </nav>
+            </div>
+
+            <!-- Badge & Pills -->
+            <div class="lg-component-group">
+                <h3 class="lg-component-title">Badges</h3>
+                <div class="lg-badge-group">
+                    <span class="lg-badge lg-badge-primary">New</span>
+                    <span class="lg-badge lg-badge-success">Active</span>
+                    <span class="lg-badge lg-badge-warning">Beta</span>
+                    <span class="lg-badge lg-badge-danger">Deprecated</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="lg-section">
+            <h2 class="lg-section-title">Why Liquid Glass UI?</h2>
+            <div class="lg-feature-grid">
+                <div class="lg-feature-card">
+                    <div class="lg-feature-icon">✨</div>
+                    <h3 class="lg-feature-title">Apple-Inspired Design</h3>
+                    <p class="lg-feature-description">Beautiful frosted glass effects and subtle animations that feel native to Apple platforms.</p>
+                </div>
+
+                <div class="lg-feature-card">
+                    <div class="lg-feature-icon">♿</div>
+                    <h3 class="lg-feature-title">Accessible by Default</h3>
+                    <p class="lg-feature-description">WCAG compliant with proper ARIA labels, keyboard navigation, and screen reader support.</p>
+                </div>
+
+                <div class="lg-feature-card">
+                    <div class="lg-feature-icon">🎨</div>
+                    <h3 class="lg-feature-title">Fully Customizable</h3>
+                    <p class="lg-feature-description">CSS variables make it easy to adapt colors, spacing, and effects to match your brand.</p>
+                </div>
+
+                <div class="lg-feature-card">
+                    <div class="lg-feature-icon">⚡</div>
+                    <h3 class="lg-feature-title">Lightweight & Fast</h3>
+                    <p class="lg-feature-description">Pure CSS and minimal JavaScript for optimal performance and quick load times.</p>
+                </div>
+
+                <div class="lg-feature-card">
+                    <div class="lg-feature-icon">📱</div>
+                    <h3 class="lg-feature-title">Responsive Design</h3>
+                    <p class="lg-feature-description">Works beautifully on all screen sizes from mobile to desktop.</p>
+                </div>
+
+                <div class="lg-feature-card">
+                    <div class="lg-feature-icon">🔓</div>
+                    <h3 class="lg-feature-title">Free & Open Source</h3>
+                    <p class="lg-feature-description">MIT licensed. Use it in any project, commercial or personal.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Example -->
+    <div id="demo-modal" class="lg-modal" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+        <div class="lg-modal-backdrop" onclick="LiquidGlass.modal.close('demo-modal')"></div>
+        <div class="lg-modal-content">
+            <div class="lg-modal-header">
+                <h3 id="modal-title" class="lg-modal-title">Welcome to Liquid Glass UI</h3>
+                <button class="lg-modal-close" onclick="LiquidGlass.modal.close('demo-modal')" aria-label="Close modal">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="lg-modal-body">
+                <p>This modal demonstrates the beautiful frosted glass effect that makes Liquid Glass UI special.</p>
+                <p>Notice how the background blurs and the modal feels like it's floating above the content.</p>
+            </div>
+            <div class="lg-modal-footer">
+                <button class="lg-button lg-button-ghost" onclick="LiquidGlass.modal.close('demo-modal')">Cancel</button>
+                <button class="lg-button lg-button-primary" onclick="LiquidGlass.modal.close('demo-modal')">Got it!</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="lg-footer">
+        <div class="lg-container">
+            <p>&copy; 2025 Liquid Glass UI. Built with ❤️ for the web.</p>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
