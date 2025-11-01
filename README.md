@@ -1,21 +1,7 @@
-# 🌊 Liquid Glass UI
+#  Liquid Glass UI
 
 A beautiful, lightweight, and accessible UI component library inspired by Apple's iconic frosted glass design language. Perfect for creating modern, elegant web interfaces with that premium Apple aesthetic.
 
-![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
-![Size](https://img.shields.io/badge/Size-~15KB-green.svg)
-![Dependencies](https://img.shields.io/badge/Dependencies-0-brightgreen.svg)
-
-## ✨ Features
-
-- 🍎 **Apple-Inspired Design** - Beautiful frosted glass effects and smooth animations
-- ♿ **Accessible by Default** - WCAG compliant with proper ARIA labels and keyboard navigation
-- 🎨 **Fully Customizable** - Easy-to-use CSS variables for colors, spacing, and effects
-- ⚡ **Lightweight** - Pure CSS and minimal JavaScript (~15KB total)
-- 📱 **Responsive** - Works beautifully on all screen sizes
-- 🌗 **Dark Mode Support** - Automatic dark mode based on system preferences
-- 🔓 **Open Source** - MIT licensed, use it anywhere
-- 0️⃣ **Zero Dependencies** - No frameworks required, works with vanilla JS
 
 ## 🚀 Quick Start
 
