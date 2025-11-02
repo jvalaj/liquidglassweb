@@ -56,20 +56,4 @@ class LiquidGlassAdvanced {
     console.log('⚠️ Advanced liquid glass disabled for performance');
     return;
   }
-
-  applyAdvancedGlass(element) {
-    // Disabled for performance
-    return;
-
-    // Disabled - too performance intensive
-    return;
-
-  observeDOM() {
-    // Disabled for performance
-    return;
-  }
 }
-
-// Disable advanced effects - they cause too much lag
-// The existing turbulence-based filters in main.js provide good liquid glass effects
-console.log('⚠️ Advanced chromatic aberration disabled for performance - using lightweight turbulence filters instead');
