@@ -435,6 +435,7 @@ body::after {
 .lg-card {
   background: transparent;
   border: none;
+  width: 30vw;
   border-radius: var(--lg-radius-xl);
   padding: var(--lg-space-xl);
   box-shadow: 
@@ -575,6 +576,7 @@ body::after {
    Alerts
    ======================================== */
 .lg-alert {
+  width: 30vw;
   display: flex;
   gap: var(--lg-space-md);
   padding: var(--lg-space-md);
